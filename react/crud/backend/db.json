@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "teste@teste.com.br"
+    },
+    {
+      "id": 2,
+      "name": "Jane Doe",
+      "email": "teste@teste.com.br"
+    },
+    {
+      "id": 3,
+      "name": "Cleiton Doe",
+      "email": "teste@teste.com.br"
+    },
+    {
+      "name": "Pedro Henrique Alarcon",
+      "email": "pedrohenriquealarcon@gmail.com",
+      "id": 4
+    }
+  ]
+}
