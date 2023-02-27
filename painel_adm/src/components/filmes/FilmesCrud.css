@@ -16,6 +16,7 @@
 .filmes-container header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .filmes-container header img {
@@ -35,10 +36,23 @@
 table,
 th,
 td {
-    border: 1px solid black;
     margin-top: 10px;
     margin-left: 10px;
     margin-right: 10px;
     padding: 20px;
     text-align: left;
+}
+
+.input-group-text {
+    margin: 0px 10px;
+}
+
+.btn-adicionar {
+    padding: 0px 10px;
+    font-size: 18px;
+}
+
+.btn-adicionar strong {
+    margin-right: 8px;
+    font-size: 20px;
 }
