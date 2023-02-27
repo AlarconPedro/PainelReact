@@ -14,9 +14,14 @@ export default function FilmesCrud() {
     const [filmesData, setFilmesData] = useState([]);
 
     const [filme, setFilme] = useState({
-        Titulo: "",
-        Genero: "",
-        Duracao: ""
+        // Id: "",
+        titulo: "",
+        genero: "",
+        duracao: ""
+    });
+
+    const [tituloBusca, setTituloBusca] = useState({
+        titulo: ""
     });
 
     const [abrirCadastroFilmes, setAbrirCadastroFilmes] = useState(false);
@@ -27,7 +32,25 @@ export default function FilmesCrud() {
         setAbrirCadastroFilmes(!abrirCadastroFilmes);
     }
 
-    const abrirFecharEditarFilmes = () => { }
+    const abrirFecharEditarFilmes = () => {
+        setAbrirEditarFilmes(!abrirEditarFilmes);
+     }
+
+    const atualizaCampo = e => {
+        const { name, value } = e.target;
+        setFilme({
+            ...filme,
+            [name]: value
+        });
+    }
+
+    const atualizaCampoBusca = e => {
+        const { name, value } = e.target;
+        setTituloBusca({
+            ...tituloBusca,
+            [name]: value
+        });
+    }
 
     const getFilmes = async () => {
         await axios.get(baseUrl).then(response => {
@@ -37,7 +60,17 @@ export default function FilmesCrud() {
         });
     }
 
+    const getFilmesTitulo = async () => {
+        await axios.get(baseUrl + "/" + filme.titulo).then(response => {
+            setFilmesData(response.data);
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+
     const postFilmes = async () => {
+        // delete filme.Id;
+        filme.duracao = parseInt(filme.duracao);
         await axios.post(baseUrl, filme).then(response => {
             setFilme(filme.concat(response.data));
             setUpdateFilmes(true);
@@ -62,11 +95,13 @@ export default function FilmesCrud() {
                     <button className="btn btn-success btn-adicionar" onClick={() => abrirFecharCadastroFilmes()}><strong>+</strong> Adicionar Filme</button>
                 </header>
                 <hr />
-                <div class="input-group rounded">
-                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                    <span class="input-group-text border-0" id="search-addon">
-                        <i class="fa fa-search"></i>
-                    </span>
+                <div className="input-group rounded">
+                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={atualizaCampoBusca} />
+                    <button className="botaoBusca" onClick={() => getFilmesTitulo()}>
+                        <span className="input-group-text border-0" id="search-addon">
+                            <i className="fa fa-search"></i>
+                        </span>
+                    </button>
                 </div>
                 <br />
                 <table className="table table-striped">
@@ -82,7 +117,7 @@ export default function FilmesCrud() {
                     <tbody>
                         {filmesData.map((filme) => (
                             <tr key={filme.id}>
-                                <td>{filme.sessoes[0].filmeId}</td>
+                                <td>{filme.id}</td>
                                 <td>{filme.titulo}</td>
                                 <td>{filme.genero}</td>
                                 <td>{filme.duracao}</td>
@@ -105,15 +140,15 @@ export default function FilmesCrud() {
                         <div className="form-group" name="titulo">
                             <label>Titulo</label>
                             <br />
-                            <input type="text" className="form-control" name="titulo" />
+                            <input type="text" className="form-control" name="titulo" onChange={atualizaCampo} />
                             <br />
                             <label>Genero</label>
                             <br />
-                            <input type="text" className="form-control" name="genero" />
+                            <input type="text" className="form-control" name="genero" onChange={atualizaCampo} />
                             <br />
                             <label>Duração</label>
                             <br />
-                            <input type="number" className="form-control" name="duracao" />
+                            <input type="number" className="form-control" name="duracao" onChange={atualizaCampo} />
                         </div>
                     </ModalBody>
                     <ModalFooter>
